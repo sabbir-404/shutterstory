@@ -1,0 +1,222 @@
+
+
+/* css/styles.css
+   Dark theme default. Use data-theme="light" on <body> to switch.
+*/
+
+/* ========== variables ========= */
+:root{
+  --bg: #0b0b0c;          /* dark background */
+  --panel: #0f1113;
+  --card-bg: #0f1113;
+  --text: #e7e7e9;
+  --muted: #bdbfc3;
+  --accent: #4aa3ff;
+  --accent-2: #7bd389;
+  --glass: rgba(255,255,255,0.03);
+  --max-width: 1100px;
+  --radius: 12px;
+  --shadow: 0 8px 30px rgba(2,6,23,0.6);
+  --tran: 200ms;
+}
+
+/* light theme overrides */
+body[data-theme="light"]{
+  --bg: #ffffff;
+  --panel: #ffffff;
+  --card-bg: #fbfbfb;
+  --text: #111111;
+  --muted: #6b6b6b;
+  --accent: #1f6feb;
+  --accent-2: #2fb48f;
+  --glass: rgba(0,0,0,0.03);
+  --shadow: 0 6px 24px rgba(20,20,40,0.06);
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;
+  color:var(--text);
+  background:var(--bg);
+  -webkit-font-smoothing:antialiased;
+  transition: background var(--tran) ease, color var(--tran) ease;
+}
+.container{max-width:var(--max-width);margin:0 auto;padding:32px}
+
+/* Links & Utilities */
+a{color:inherit}
+.muted{color:var(--muted)}
+.btn{display:inline-block;padding:9px 14px;border-radius:10px;background:var(--accent);color:#fff;text-decoration:none;margin-top:8px;box-shadow:var(--shadow)}
+.btn.outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--text);padding:8px 12px}
+.small-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px 10px;border-radius:8px;margin-right:8px;color:var(--text)}
+
+/* Loader */
+.loader{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(0,0,0,0.65),rgba(0,0,0,0.45));z-index:9999;transition:opacity .45s ease}
+#loaderLogo circle{transform-origin:50% 50%;animation:dash 1.6s ease forwards}
+@keyframes dash{to{stroke-dashoffset:0;}} 
+.loader.hidden{opacity:0;pointer-events:none;visibility:hidden}
+
+/* Nav */
+.nav{position:sticky;top:0;background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.15));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.04);z-index:50}
+body[data-theme="light"] .nav{background:rgba(255,255,255,0.9);border-bottom:1px solid rgba(0,0,0,0.06)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;padding:12px 20px}
+.brand{font-weight:700;text-decoration:none}
+.main-nav{display:flex;gap:18px}
+.hamburger{display:none;background:none;border:0;font-size:20px}
+
+/* nav controls */
+.nav-controls{display:flex;gap:8px;align-items:center}
+.theme-toggle{background:transparent;border:0;font-size:18px;padding:8px;border-radius:8px;cursor:pointer;color:var(--text)}
+/* Boxed navigation links */
+.main-nav .nav-link {
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--text);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Hover effect with soft animation */
+.main-nav .nav-link:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+}
+
+/* Responsive nav */
+@media (max-width:760px){
+  .main-nav{display:none}
+  .hamburger{display:block}
+}
+
+/* Hero / slider */
+.hero{position:relative;margin-bottom:20px}
+.slider{position:relative;height:62vh;min-height:320px;border-radius:8px;overflow:hidden;box-shadow:var(--shadow)}
+.slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.02);transition:opacity .8s ease, transform .8s ease}
+.slide.active{opacity:1;transform:scale(1)}
+.slider-btn{position:absolute;top:50%;transform:translateY(-50%);background:var(--glass);border:0;padding:8px 12px;border-radius:6px;cursor:pointer;color:var(--text)}
+.slider-btn.prev{left:18px}
+.slider-btn.next{right:18px}
+.dots{position:absolute;left:50%;transform:translateX(-50%);bottom:14px;display:flex;gap:8px}
+.dots button{width:10px;height:10px;border-radius:50%;border:0;background:rgba(255,255,255,0.12)}
+.dots button.active{background:var(--accent)}
+.hero-caption{position:absolute;left:6%;bottom:8%;color:var(--text);text-shadow:0 3px 18px rgba(0,0,0,0.35)}
+.hero-caption h1{font-size:44px;margin:0}
+
+/* Featured albums */
+.featured-albums{margin:40px 0}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.album-rotator{display:flex;align-items:center;justify-content:center}
+.album-rotor-card{display:flex;gap:20px;align-items:center;background:var(--card-bg);padding:18px;border-radius:12px;box-shadow:var(--shadow);max-width:980px;width:100%}
+.rotor-thumb{width:44%;height:260px;background-size:cover;background-position:center;border-radius:10px;flex-shrink:0}
+.rotor-meta{flex:1}
+.rotor-meta h3{margin:0 0 8px 0}
+.rotor-meta p{margin:0 0 12px 0}
+.rotor-actions{display:flex;gap:10px;align-items:center}
+
+/* Achievements */
+.achievements{margin:36px 0}
+.achievement-list{list-style: none;padding:0;margin:12px 0;display:grid;gap:8px}
+.achievement-list li{background:var(--panel);padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03)}
+
+/* About */
+.split{display:grid;grid-template-columns:1fr 360px;gap:24px;align-items:center}
+.about-image{height:260px;background-size:cover;background-position:center;border-radius:10px}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
+
+/* Footer */
+.footer{padding:24px 0;border-top:1px solid rgba(255,255,255,0.04);margin-top:40px;text-align:center}
+body[data-theme="light"] .footer{border-top-color:rgba(0,0,0,0.06)}
+
+/* small */
+.fade-up{opacity:0;transform:translateY(12px);transition:opacity .6s ease, transform .6s ease}
+.fade-up.in{opacity:1;transform:translateY(0)}
+.hidden{display:none}
+
+/* mobile tweaks */
+@media (max-width:560px){
+  .hero-caption h1{font-size:28px}
+  .hero-caption p{font-size:14px}
+  .rotor-thumb{display:none}
+  .album-rotor-card{flex-direction:column;align-items:flex-start}
+}
+
+/* -------------------------------
+   Mobile + Featured Rotator + Achievements + About + Socials
+   Append this to css/styles.css
+   ------------------------------- */
+
+/* Mobile optimizations (mobile-first) */
+.container { padding-left: 16px; padding-right: 16px; }
+
+/* HERO adjustments for small screens */
+.hero .slider { height: 52vh; min-height: 260px; }
+.hero-caption h1 { font-size: 28px; }
+@media (max-width: 460px) {
+  .hero .slider { height: 44vh; }
+  .hero-caption h1 { font-size: 20px; }
+}
+
+/* Featured album rotator responsiveness */
+.album-rotator { display:flex; justify-content:center; margin-top: 6px; }
+.album-rotor-card { display:flex; gap:16px; align-items:center; padding:14px; border-radius:12px; }
+.rotor-thumb { width:46%; height:180px; border-radius:10px; background-size:cover; background-position:center; flex-shrink:0; }
+.rotor-meta { flex:1; }
+.rotor-actions { margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; }
+
+/* Auto slide in/out animation for rotor */
+.album-rotor-card.fade-in { animation: fadeIn .36s ease both; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px) } to { opacity:1; transform: translateY(0) } }
+
+/* Featured controls touch adjustments */
+.featured-controls .small-btn { padding:8px 10px; min-width:40px; }
+
+/* Make rotator stacked on small screens */
+@media (max-width:800px) {
+  .album-rotor-card { flex-direction: column; align-items:stretch; }
+  .rotor-thumb { width:100%; height:200px; }
+  .rotor-meta { padding-top:8px; text-align:center; }
+  .rotor-actions { justify-content:center; }
+}
+
+/* Achievements layout */
+.achievement-grid { display:grid; gap:14px; margin-top:16px; }
+.achievement-row { display:flex; gap:12px; align-items:flex-start; background:var(--panel); padding:12px; border-radius:10px; box-shadow:var(--shadow); }
+.achievement-thumb { width:120px; height:120px; object-fit:cover; border-radius:8px; flex-shrink:0; }
+.achievement-meta h3 { margin:0 0 6px; font-size:1rem; }
+.achievement-meta .small { font-size:0.92rem; color:var(--muted); margin:0; }
+
+/* Stack achievements on small screens */
+@media (max-width:720px) {
+  .achievement-row { flex-direction:column; align-items:flex-start; }
+  .achievement-thumb { width:100%; height:180px; border-radius:10px; }
+}
+
+/* About: round portrait on right */
+.split { display:grid; grid-template-columns: 1fr 280px; gap:24px; align-items:center; }
+.about-image.round { width:220px; height:220px; border-radius:50%; background-size:cover; background-position:center; margin-left:auto; box-shadow:var(--shadow); }
+@media (max-width:900px) {
+  .split { grid-template-columns:1fr; }
+  .about-image.round { width:180px; height:180px; margin:18px 0 0 0; border-radius:20px; } /* less round on narrow screens to preserve layout */
+}
+
+/* Socials */
+.socials { display:flex; gap:10px; align-items:center; margin-top:12px; flex-wrap:wrap; }
+.social-link { display:inline-flex; gap:8px; align-items:center; padding:6px 10px; border-radius:8px; background:transparent; color:var(--text); text-decoration:none; border:1px solid var(--outline, rgba(255,255,255,0.04)); transition:background .18s ease, transform .12s ease; }
+.social-link svg { display:inline-block; vertical-align:middle; }
+.social-link:hover { transform: translateY(-3px); background:var(--glass); }
+
+/* Light adjustments for mobile tap targets */
+.btn, .small-btn { min-height:40px; }
+
+/* Minor: ensure hero dots and slider buttons are reachable on mobile */
+.slider-btn { padding:10px 14px; font-size:20px; }
+.dots button { width:14px; height:14px; padding:6px; border-radius:12px; }
+
+/* keep animations accessible */
+@media (prefers-reduced-motion: reduce){ .album-rotor-card.fade-in, .hero .slide { animation: none !important; transition:none !important; } }

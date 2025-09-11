@@ -1,0 +1,200 @@
+/* gallery.css
+   Gallery-specific styles (album tiles, grid, lightbox).
+   Link this AFTER your main stylesheet so it can override defaults.
+*/
+
+/* Fallback variables if main stylesheet not loaded */
+:root {
+  --card-bg: #111;
+  --muted: #bdbfc3;
+  --text: #e7e7e9;
+  --accent: #4aa3ff;
+  --radius: 12px;
+  --shadow: 0 8px 30px rgba(2,6,23,0.6);
+}
+
+/* Container tweaks for gallery page */
+.gallery-page .container {
+  padding-top: 28px;
+  padding-bottom: 48px;
+}
+
+/* Albums list (tiles) */
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  margin-top: 18px;
+}
+
+/* Reuse your album-card but ensure consistent sizing on gallery page */
+.album-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 260px;
+  justify-content: space-between;
+}
+
+/* Thumb inside album tile */
+.album-card .thumb {
+  width: 100%;
+  height: 160px;
+  border-radius: calc(var(--radius) - 4px);
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 12px;
+  flex-shrink: 0;
+}
+
+/* Meta text */
+.album-card h3 {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+.album-card .short {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* Buttons row in tile */
+.album-card .btn {
+  margin-top: 10px;
+}
+
+/* Gallery grid (single album view) */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+/* Thumbnails in grid */
+.gallery-grid img.gallery-thumb {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: calc(var(--radius) - 4px);
+  cursor: pointer;
+  display: block;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+}
+
+.gallery-grid img.gallery-thumb:hover,
+.gallery-grid img.gallery-thumb:focus {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+/* Lightbox styles */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  z-index: 9999;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 220ms ease, visibility 220ms ease;
+}
+
+.lightbox[aria-hidden="false"] {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Lightbox content */
+.lightbox img {
+  max-width: 92%;
+  max-height: 78vh;
+  border-radius: calc(var(--radius) - 2px);
+  box-shadow: 0 18px 60px rgba(0,0,0,0.6);
+  display: block;
+}
+
+/* lightbox controls */
+.lightbox .lb-close,
+.lightbox .lb-prev,
+.lightbox .lb-next {
+  position: absolute;
+  background: transparent;
+  border: 0;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background 120ms ease;
+}
+
+/* close button (top right) */
+.lightbox .lb-close {
+  top: 18px;
+  right: 20px;
+  font-size: 30px;
+}
+
+/* nav buttons */
+.lightbox .lb-prev { left: 14px; top: 50%; transform: translateY(-50%); font-size: 38px; }
+.lightbox .lb-next { right: 14px; top: 50%; transform: translateY(-50%); font-size: 38px; }
+
+.lightbox .lb-prev:hover,
+.lightbox .lb-next:hover,
+.lightbox .lb-close:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+/* caption */
+.lightbox p {
+  margin-top: 12px;
+  color: var(--muted);
+  font-size: 14px;
+  text-align: center;
+}
+
+/* small screen optimizations */
+@media (max-width: 900px) {
+  .gallery-grid img.gallery-thumb { height: 170px; }
+  .album-card { min-height: 0; padding: 10px; }
+  .album-card .thumb { height: 140px; }
+}
+
+@media (max-width: 560px) {
+  .gallery-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+  .gallery-grid img.gallery-thumb { height: 140px; }
+  .lightbox img { max-height: 72vh; max-width: 96%; }
+  .lightbox .lb-prev, .lightbox .lb-next { font-size: 28px; left: 8px; right: 8px; }
+}
+
+/* Accessibility & keyboard focus */
+.lightbox:focus { outline: none; }
+.lightbox .lb-close:focus,
+.lightbox .lb-prev:focus,
+.lightbox .lb-next:focus,
+.album-card .btn:focus,
+.album-card a:focus {
+  outline: 3px solid rgba(0,0,0,0.12);
+  outline-offset: 3px;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .gallery-grid img.gallery-thumb,
+  .album-card,
+  .lightbox img {
+    transition: none !important;
+  }
+}

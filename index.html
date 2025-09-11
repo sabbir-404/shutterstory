@@ -1,0 +1,192 @@
+<!-- index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Your Name — Photography</title>
+
+  <!-- local CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body data-theme="dark"><!-- dark theme is default -->
+  <!-- LOADER / SPLASH -->
+  <div id="loader" class="loader" role="status" aria-live="polite" aria-hidden="false">
+    <svg id="loaderLogo" viewBox="0 0 120 120" width="120" height="120" aria-hidden="true">
+      <defs>
+        <linearGradient id="g" x1="0" x2="1">
+          <stop offset="0%" stop-color="#fff" />
+          <stop offset="100%" stop-color="#bbb" />
+        </linearGradient>
+      </defs>
+      <circle cx="60" cy="60" r="44" fill="none" stroke="url(#g)" stroke-width="6" stroke-linecap="round"
+              stroke-dasharray="260" stroke-dashoffset="260"></circle>
+      <text x="50%" y="54%" text-anchor="middle" font-size="20" fill="#fff" font-family="sans-serif">Y/N</text>
+    </svg>
+  </div>
+
+  <!-- NAV -->
+<header class="nav">
+  <div class="nav-inner container">
+    <a class="brand" href="/index.html">YourName</a>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      <a class="nav-link" href="#">Home</a>
+      <a class="nav-link" href="Gallery/index.html">Gallery</a>
+      <a class="nav-link" href="/Home_page.html#about">About</a>
+      <a class="nav-link" href="/Home_page.html#contact">Contact</a>
+    </nav>
+
+    <div class="nav-controls">
+      <button id="themeToggle" class="theme-toggle" aria-pressed="false" title="Toggle light/dark theme">🌙</button>
+      <button id="menuBtn" class="hamburger" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</header>
+
+
+  <!-- HERO / SLIDER -->
+  <section class="hero">
+    <div class="slider" id="heroSlider" aria-roledescription="carousel">
+      <div class="slide" style="background-image:url('assets/hero1.jpg')" data-index="0" role="group" aria-roledescription="slide"></div>
+      <div class="slide" style="background-image:url('assets/hero2.jpg')" data-index="1" role="group" aria-roledescription="slide"></div>
+      <div class="slide" style="background-image:url('assets/hero3.jpg')" data-index="2" role="group" aria-roledescription="slide"></div>
+
+      <button class="slider-btn prev" data-action="prev" aria-label="Previous slide">‹</button>
+      <button class="slider-btn next" data-action="next" aria-label="Next slide">›</button>
+
+      <div class="dots" id="heroDots" aria-hidden="false"></div>
+    </div>
+
+    <div class="hero-caption container">
+      <h1>Moments. Light. Story.</h1>
+      <p class="muted">Photography by <strong>Your Name</strong> — capturing life one frame at a time.</p>
+    </div>
+  </section>
+
+  <!-- FEATURED ALBUMS (rotating) -->
+  <!-- FEATURED ALBUMS (rotating) -->
+  <section class="featured-albums">
+    <div class="container">
+      <header class="section-head">
+        <h2>Featured Albums</h2>
+        <div class="featured-controls">
+          <button id="featPrev" class="small-btn" aria-label="Previous album">‹</button>
+          <button id="featNext" class="small-btn" aria-label="Next album">›</button>
+          <a class="btn outline" href="gallery/index.html" title="See all galleries">See all galleries</a>
+        </div>
+      </header>
+
+      <div class="album-rotator" id="albumRotator" role="region" aria-live="polite">
+        <!-- Rotating album card (JS will update content) -->
+        <article class="album-rotor-card" id="albumCard" aria-hidden="true">
+          <div class="rotor-thumb" id="rotorThumb" style=""></div>
+          <div class="rotor-meta">
+            <h3 id="rotorTitle">Album title</h3>
+            <p id="rotorDesc" class="muted">Short description</p>
+            <div class="rotor-actions">
+              <a id="rotorView" class="btn" href="#">View album</a>
+              <a id="rotorMore" class="btn outline" href="gallery/index.html">See all galleries</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ACHIEVEMENTS -->
+  <!-- ACHIEVEMENTS -->
+  <section class="achievements">
+    <div class="container">
+      <h2>Achievements</h2>
+      <p class="muted">A snapshot of honors, publications and milestones.</p>
+
+      <div class="achievement-grid">
+        <!-- Achievement 1 -->
+        <article class="achievement-row">
+          <img class="achievement-thumb" src="assets/achievements/city-award-2024.jpg" alt="City Photo Awards 2024">
+          <div class="achievement-meta">
+            <h3>Winner — City Photo Awards, Wedding Category</h3>
+            <p class="muted small">2024 — Selected for intimate storytelling and natural-light portraits.</p>
+          </div>
+        </article>
+
+        <!-- Achievement 2 -->
+        <article class="achievement-row">
+          <img class="achievement-thumb" src="assets/achievements/lens-mag-2023.jpg" alt="Lens Magazine 2023">
+          <div class="achievement-meta">
+            <h3>Published — Lens Magazine (Feature editorial)</h3>
+            <p class="muted small">2023 — Full editorial spread highlighting travel and wedding work.</p>
+          </div>
+        </article>
+
+        <!-- Achievement 3 -->
+        <article class="achievement-row">
+          <img class="achievement-thumb" src="assets/achievements/exhibit-2022.jpg" alt="Light & Street exhibition">
+          <div class="achievement-meta">
+            <h3>Exhibited — "Light & Street" group show</h3>
+            <p class="muted small">2022 — Group exhibition focusing on urban lighting and candid portraits.</p>
+          </div>
+        </article>
+
+        <!-- Achievement 4 -->
+        <article class="achievement-row">
+          <img class="achievement-thumb" src="assets/achievements/emerging-2019.jpg" alt="Best Emerging Photographer 2019">
+          <div class="achievement-meta">
+            <h3>Best Emerging Photographer — Regional Awards</h3>
+            <p class="muted small">2019 — Recognized for consistent creative vision and client work.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ABOUT -->
+  <section id="about" class="about">
+    <div class="container split">
+      <div>
+        <h2>About Me</h2>
+        <p>Hello — I'm <strong>Your Name</strong>. I make photographs that tell stories. I shoot weddings, travel and commissioned portrait sessions. Based in [Your City].</p>
+        <p>Available for commissions worldwide — <a href="#contact">get in touch</a>.</p>
+
+        <!-- Socials block (also duplicated in footer) -->
+        <div class="socials">
+          <a class="social-link" href="https://instagram.com/yourhandle" target="_blank" rel="noopener">
+            <!-- simple inline svg Instagram icon -->
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.7A3.3 3.3 0 1 0 15.3 12 3.3 3.3 0 0 0 12 8.7zM18.4 6.1a.9.9 0 1 1-.9-.9.9.9 0 0 1 .9.9z"/></svg>
+            <span>@yourhandle</span>
+          </a>
+
+          <a class="social-link" href="https://facebook.com/yourhandle" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M22 12a10 10 0 1 0-11.5 9.9v-7H8.2v-2.9h2.3V9.2c0-2.3 1.4-3.6 3.5-3.6 1 0 2 .07 2 .07v2.2h-1.1c-1.08 0-1.4.68-1.4 1.38v1.66h2.4l-.38 2.9h-2v7A10 10 0 0 0 22 12z"/></svg>
+            <span>Facebook</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- round portrait on the right -->
+      <div class="about-image round" style="background-image:url('assets/about.jpg')" aria-hidden="true"></div>
+    </div>
+  </section>
+
+
+  <!-- CONTACT / FOOTER -->
+  <footer id="contact" class="footer">
+    <div class="container">
+      <div class="contact-card">
+        <h3>Book a shoot or say hi</h3>
+        <p>Email: <a href="mailto:youremail@example.com">youremail@example.com</a></p>
+        <p>Instagram: <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener">@yourhandle</a></p>
+      </div>
+
+      <p class="copyright">© <span id="year"></span> Your Name — All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/scripts.js" defer></script>
+  <script src="js/albums.js" defer></script>
+
+</body>
+</html>

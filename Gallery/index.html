@@ -1,0 +1,101 @@
+<!-- gallery/index.html -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gallery — Your Name Photography</title>
+
+  <!-- main site styles (theme variables, layout) -->
+  <link rel="stylesheet" href="../css/styles.css">
+  <!-- gallery-specific overrides -->
+  <link rel="stylesheet" href="../css/gallery.css">
+</head>
+
+<!-- default theme is dark; scripts.js will read/set localStorage if user toggles -->
+<body data-theme="dark">
+  <!-- LOADER (same as home so UX is consistent) -->
+  <div id="loader" class="loader" role="status" aria-live="polite" aria-hidden="false">
+    <svg id="loaderLogo" viewBox="0 0 120 120" width="120" height="120" aria-hidden="true">
+      <defs>
+        <linearGradient id="g" x1="0" x2="1">
+          <stop offset="0%" stop-color="#fff" />
+          <stop offset="100%" stop-color="#bbb" />
+        </linearGradient>
+      </defs>
+      <circle cx="60" cy="60" r="44" fill="none" stroke="url(#g)" stroke-width="6" stroke-linecap="round"
+              stroke-dasharray="260" stroke-dashoffset="260"></circle>
+      <text x="50%" y="54%" text-anchor="middle" font-size="20" fill="#fff" font-family="sans-serif">Y/N</text>
+    </svg>
+  </div>
+
+  <!-- NAV (same structure & features as home: theme toggle + hamburger) -->
+<!-- NAV -->
+<header class="nav">
+  <div class="nav-inner container">
+    <a class="brand" href="/index.html">YourName</a>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      <a class="nav-link" href="../index.html">Home</a>
+      <a class="nav-link" href="#">Gallery</a>
+      <a class="nav-link" href="../index.html#about">About</a>
+      <a class="nav-link" href="../index.html">Contact</a>
+    </nav>
+
+    <div class="nav-controls">
+      <button id="themeToggle" class="theme-toggle" aria-pressed="false" title="Toggle light/dark theme">🌙</button>
+      <button id="menuBtn" class="hamburger" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+    </div>
+  </div>
+</header>
+
+
+  <!-- Page content keeps home layout (container) and shows gallery details -->
+  <main class="container gallery-page">
+    <a class="back" href="../index.html">← Back</a>
+
+    <!-- Title & description will be populated by gallery.js -->
+    <h1 id="albumTitle">Gallery</h1>
+    <p id="albumDesc" class="muted">Select an album or browse all galleries below.</p>
+
+    <!-- Albums list (All Galleries) -->
+    <div id="albumsList" class="album-grid" aria-live="polite"></div>
+
+    <!-- Single album image grid -->
+    <div id="galleryGrid" class="gallery-grid" aria-live="polite"></div>
+
+    <!-- Lightbox (same functionality as in earlier gallery.html) -->
+    <div id="lightbox" class="lightbox" aria-hidden="true" tabindex="-1">
+      <button class="lb-close" aria-label="Close (Esc)">×</button>
+      <button class="lb-prev" aria-label="Previous (left arrow)">‹</button>
+      <img id="lightboxImg" src="" alt="">
+      <button class="lb-next" aria-label="Next (right arrow)">›</button>
+      <p id="lightboxCaption" class="muted"></p>
+    </div>
+  </main>
+
+  <!-- Achievements or extra home-like sections can still be included below if desired -->
+  <!-- (kept minimal here to preserve gallery focus) -->
+
+  <!-- Footer (same style as home) -->
+  <footer class="footer">
+    <div class="container">
+      <div class="contact-card">
+        <h3>Book a shoot or say hi</h3>
+        <p>Email: <a href="mailto:youremail@example.com">youremail@example.com</a></p>
+        <p>Instagram: <a href="https://instagram.com/yourhandle" target="_blank" rel="noopener">@yourhandle</a></p>
+      </div>
+
+      <p class="copyright">© <span id="year2"></span> Your Name — All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Shared site scripts (loader, slider, theme toggle, hamburger) -->
+    <!-- Gallery logic (renders albums / grids / lightbox) -->
+    <script src="../js/gallery.js" defer></script>
+    <script src="../js/albums.js" defer></script>
+    <script src="../js/scripts.js" defer></script>
+    <script src="../js/gallery.js" defer></script>
+
+</body>
+</html>

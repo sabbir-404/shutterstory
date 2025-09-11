@@ -1,0 +1,223 @@
+/* Hero Section */
+.wedding-hero {
+  height: 60vh;
+  background: url('../assets/albums/weddings/header.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.wedding-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+}
+.hero-overlay {
+  position: relative;
+  color: #fff;
+  text-align: center;
+  z-index: 1;
+}
+.hero-overlay h1 {
+  font-size: 2.2rem;
+  max-width: 700px;
+  margin: 0 auto;
+  animation: fadeInUp 1.5s ease;
+}
+
+/* Sub Albums */
+.wedding-events {
+  margin: 40px 0;
+}
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.event-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.event-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.event-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.event-info {
+  padding: 16px;
+}
+.event-info h3 {
+  margin: 0 0 6px;
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+/* gallery loading animation: blur-up + fade + subtle lift */
+.gallery-thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  transform-origin: center;
+  transition: filter 420ms cubic-bezier(.2,.9,.2,1), 
+              opacity 420ms cubic-bezier(.2,.9,.2,1),
+              transform 420ms cubic-bezier(.2,.9,.2,1),
+              box-shadow 420ms ease;
+  opacity: 0;
+  filter: blur(12px) saturate(.95) contrast(.98);
+  transform: translateY(8px) scale(1.02);
+  will-change: opacity, transform, filter;
+  /* help with image rendering on some browsers */
+  backface-visibility: hidden;
+}
+
+/* When loaded, show crisp image */
+.gallery-thumb.loaded {
+  opacity: 1;
+  filter: blur(0) saturate(1) contrast(1);
+  transform: translateY(0) scale(1);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+}
+
+/* Minimal placeholder box while image hasn't been added yet */
+.gallery-grid .placeholder {
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.03));
+  border-radius: 8px;
+  min-height: 120px;
+}
+
+/* Make sure lightbox images also transition smoothly */
+#lightboxImg {
+  transition: opacity 280ms ease;
+  opacity: 0;
+}
+.lightbox[aria-hidden="false"] #lightboxImg.loaded {
+  opacity: 1;
+}
+
+/* reduce animation if user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .gallery-thumb, #lightboxImg { transition: none !important; transform: none !important; filter: none !important; }
+}
+/* add this to wedding.css or gallery.css */
+.gallery-thumb.placeholder {
+  min-height: 140px; /* avoid layout shift while image loads */
+  background: linear-gradient(90deg, rgba(0,0,0,0.02), rgba(255,255,255,0.01));
+  object-fit: cover;
+}
+/* === Mobile-first adjustments for wedding pages ===
+   Paste this into css/wedding.css or css/gallery.css (after your current rules)
+*/
+
+/* Base container padding for mobile */
+.container { padding-left:16px; padding-right:16px; }
+
+/* NAV: compact, boxed links on desktop, slide-down on mobile */
+.nav-inner { gap: 12px; padding: 10px 12px; }
+.brand { font-size: 18px; }
+
+/* Hide main-nav on narrow screens; show hamburger */
+@media (max-width: 860px) {
+  .main-nav {
+    display: none; /* JS will toggle .open via body.nav-open */
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 56px; /* under header */
+    background: var(--panel);
+    padding: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    border-top: 1px solid var(--outline, rgba(255,255,255,0.04));
+    z-index: 80;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .main-nav a.nav-link {
+    display: block;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 16px;
+  }
+  .hamburger { display: inline-flex; font-size:18px; padding:8px; }
+}
+
+/* When open (body gets .nav-open class by JS), show the nav */
+body.nav-open .main-nav {
+  display: flex !important;
+}
+
+/* NAV highlight & touch size */
+.main-nav .nav-link { min-height:44px; line-height:20px; }
+.main-nav .nav-link:active,
+.main-nav .nav-link:focus { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0,0,0,0.15); }
+
+/* HERO: smaller height on phones and better text sizing */
+.hero-banner { height: 46vh; min-height:260px; background-position: center top; }
+.hero-banner .overlay { padding: 18px; }
+.hero-banner h1 { font-size: 1.6rem; line-height:1.15; margin-bottom:8px; }
+.hero-banner p { font-size: 0.95rem; margin:0; }
+
+/* Content typography (mobile-friendly) */
+.wedding-section { margin: 20px 0; }
+.wedding-section h2 { font-size: 1.1rem; margin-bottom:8px; }
+.wedding-section p { font-size: 0.95rem; color:var(--muted); }
+
+/* Gallery grid: 2 columns on small phones, single column on very small */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+@media (max-width:380px) {
+  .gallery-grid { grid-template-columns: 1fr; gap:10px; }
+}
+
+/* Image sizing for mobile: fixed height for consistent tiles */
+.gallery-grid img.gallery-thumb,
+.gallery-thumb {
+  width: 100%;
+  height: 160px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+/* Larger tap targets for lightbox controls */
+.lightbox .lb-prev,
+.lightbox .lb-next,
+.lightbox .lb-close {
+  font-size: 30px;
+  padding: 12px 14px;
+  background: rgba(0,0,0,0.35);
+  border-radius: 8px;
+  color: #fff;
+  touch-action: manipulation;
+}
+
+/* Lightbox full-screen on mobile */
+@media (max-width:860px) {
+  .lightbox img { max-width: 98%; max-height: 76vh; }
+  .lightbox { padding: 12px; }
+}
+
+/* prevent layout shift — placeholders */
+.gallery-thumb.placeholder { min-height: 140px; }
+
+/* reduce heavy shadows on mobile for performance */
+@media (max-width:560px){
+  .gallery-thumb.loaded { box-shadow: 0 6px 18px rgba(0,0,0,0.15); }
+}
+
+/* ensure the header doesn't take too much space on phones */
+.nav { position: sticky; top: 0; z-index: 120; }
