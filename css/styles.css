@@ -265,3 +265,13 @@ body[data-theme="light"] .footer{border-top-color:rgba(0,0,0,0.06)}
     max-width: 350px;
   }
 }
+/* Logo theme switch */
+.brand img { display:none; max-height:36px; width:auto; object-fit:contain; }
+
+body[data-theme="dark"] .brand img.logo-white { display:inline-block; }
+body[data-theme="light"] .brand img.logo-dark { display:inline-block; }
+
+/* responsive tweak */
+@media (max-width:560px) {
+  .brand img { max-height:30px; }
+}

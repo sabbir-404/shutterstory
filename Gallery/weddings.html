@@ -5,19 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weddings | ShutterStory</title>
   <link rel="stylesheet" href="../css/styles.css">
-  <link rel="stylesheet" href="../css/weddings.css"> <!-- New stylesheet -->
+  <link rel="stylesheet" href="../css/gallery-subsection.css"> <!-- New stylesheet -->
 </head>
 <body>
   <!-- NAV -->
   <header class="nav">
     <div class="nav-inner container">
-      <a class="brand" href="../index.html">ShutterStory</a>
+      <!-- Logo instead of text brand -->
+      <a class="brand" href="../index.html">
+        <img src="../assets/logo/white-logo.png" alt="ShutterStory Logo" class="nav-logo">
+      </a>
+
       <nav class="main-nav">
         <a class="nav-link" href="../index.html">Home</a>
         <a class="nav-link" href="./index.html">Gallery</a>
         <a class="nav-link" href="../index.html#about">About</a>
         <a class="nav-link" href="../index.html#contact">Contact</a>
       </nav>
+
       <div class="nav-controls">
         <button id="themeToggle" class="theme-toggle">🌙</button>
       </div>
@@ -35,16 +40,16 @@
   <section class="wedding-events container">
     <h2>Wedding Stories</h2>
     <div class="event-grid">
-      <a href="./weddings/john-emma.html" class="event-card">
-        <img src="../assets/albums/weddings/john-emma/thumb.jpg" alt="John & Emma Wedding">
+      <a href="./weddings/farabi-tisha.html" class="event-card">
+        <img src="../assets/weddings/farabi-tisha/thumbnail.jpg" alt="Farabi & Tisha Wedding">
         <div class="event-info">
-          <h3>John & Emma</h3>
+          <h3>Farabi & Tisha</h3>
           <p>A beautiful countryside wedding filled with love and laughter.</p>
         </div>
       </a>
 
       <a href="./weddings/beach.html" class="event-card">
-        <img src="../assets/albums/weddings/beach/thumb.jpg" alt="Beach Wedding">
+        <img src="../assets/weddings/beach/thumb.jpg" alt="Beach Wedding">
         <div class="event-info">
           <h3>Beach Wedding</h3>
           <p>Golden sunsets and ocean breeze — a romantic seaside ceremony.</p>
@@ -52,7 +57,7 @@
       </a>
 
       <a href="./weddings/traditional.html" class="event-card">
-        <img src="../assets/albums/weddings/traditional/thumb.jpg" alt="Traditional Wedding">
+        <img src="../assets/weddings/traditional/thumb.jpg" alt="Traditional Wedding">
         <div class="event-info">
           <h3>Traditional Ceremony</h3>
           <p>Rich in culture and family traditions, a timeless union.</p>
@@ -60,7 +65,7 @@
       </a>
     </div>
   </section>
-  <script src="../JS/scripts.js"></script>
 
+  <script src="../js/scripts.js"></script>
 </body>
 </html>

@@ -221,3 +221,8 @@ body.nav-open .main-nav {
 
 /* ensure the header doesn't take too much space on phones */
 .nav { position: sticky; top: 0; z-index: 120; }
+.logo {
+  height: 40px;
+  width: auto;
+  display: block;
+}

@@ -70,3 +70,8 @@
     font-size: 1.6rem;
   }
 }
+.logo {
+  height: 40px;
+  width: auto;
+  display: block;
+}
