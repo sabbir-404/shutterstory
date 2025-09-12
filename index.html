@@ -48,24 +48,39 @@
     </div>
   </header>
 
-  <!-- HERO / SLIDER (unchanged - keep as you had it) -->
-  <section class="hero">
-    <div class="slider" id="heroSlider" aria-roledescription="carousel">
-      <div class="slide" style="background-image:url('assets/hero1.jpg')" data-index="0" role="group" aria-roledescription="slide"></div>
-      <div class="slide" style="background-image:url('assets/hero2.jpg')" data-index="1" role="group" aria-roledescription="slide"></div>
-      <div class="slide" style="background-image:url('assets/hero3.jpg')" data-index="2" role="group" aria-roledescription="slide"></div>
-
-      <button class="slider-btn prev" data-action="prev" aria-label="Previous slide">‹</button>
-      <button class="slider-btn next" data-action="next" aria-label="Next slide">›</button>
-
-      <div class="dots" id="heroDots" aria-hidden="false"></div>
+<!-- HERO / SLIDER (replace your current hero section with this) -->
+<section class="hero">
+  <div class="slider" id="heroSlider" aria-roledescription="carousel">
+    <!-- slide 1 -->
+    <div class="slide" data-index="0" role="group" aria-roledescription="slide">
+      <img class="slide-img" src="assets/hero1.jpg" alt="Hero 1">
     </div>
 
-    <div class="hero-caption container" style="color:#ffffff;">
-      <h1>Moments. Light. Story.</h1>
-      <p class="muted" style="color:#ffffff;">Photography by <strong>Sabbir Islam Alvi</strong> — capturing life one frame at a time.</p>
+    <!-- slide 2 -->
+    <div class="slide" data-index="1" role="group" aria-roledescription="slide">
+      <img class="slide-img" src="assets/hero2.jpg" alt="Hero 2">
     </div>
-  </section>
+
+    <!-- slide 3 -->
+    <div class="slide" data-index="2" role="group" aria-roledescription="slide">
+      <img class="slide-img" src="assets/hero3.jpg" alt="Hero 3">
+    </div>
+
+    <button class="slider-btn prev" data-action="prev" aria-label="Previous slide">‹</button>
+    <button class="slider-btn next" data-action="next" aria-label="Next slide">›</button>
+
+    <div class="dots" id="heroDots" aria-hidden="false"></div>
+
+    <!-- caption overlay kept INSIDE the slider so it is always over images -->
+    <div class="hero-overlay">
+      <div class="hero-caption container">
+        <h1>Moments. Light. Story.</h1>
+        <p class="muted">Photography by <strong>Sabbir Islam Alvi</strong> — capturing life one frame at a time.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 
   <!-- FEATURED ALBUMS (rotating) -->
   <section class="featured-albums">
