@@ -8,7 +8,7 @@
   <!-- main stylesheet (keep all existing rules) -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body data-theme="dark"><!-- keep data-theme if you use it elsewhere; logos won't change -->
+<body data-theme="dark"><!-- keep data-theme if you use it elsewhere; logos will switch -->
 
   <!-- LOADER / SPLASH -->
   <div id="loader" class="loader" role="status" aria-live="polite" aria-hidden="false">
@@ -25,12 +25,15 @@
     </svg>
   </div>
 
-  <!-- NAV (single header; white logo only) -->
+  <!-- NAV (single header; white & dark logos present; theme toggle included) -->
   <header class="nav">
     <div class="nav-inner container">
       <a class="brand" href="/index.html" title="ShutterStory">
-        <!-- only white logo — use this single image, path relative to project root -->
-        <img src="assets/logo/white-logo.png" alt="ShutterStory" class="logo" />
+        <!-- white logo (visible when theme = dark) -->
+        <img src="assets/logo/white-logo.png" alt="ShutterStory" class="logo logo-white" />
+
+        <!-- dark logo (visible when theme = light) -->
+        <img src="assets/logo/dark-logo.png" alt="ShutterStory" class="logo logo-dark" />
       </a>
 
       <!-- main nav; JS toggles body.nav-open to show/hide on mobile -->
@@ -42,7 +45,10 @@
       </nav>
 
       <div class="nav-controls">
-        <!-- removed theme toggle (site will stay white logo / consistent color) -->
+        <!-- theme toggle (restores dark/light switch) -->
+        <button id="themeToggle" class="theme-toggle" aria-pressed="false" title="Toggle light/dark theme">🌙</button>
+
+        <!-- mobile menu -->
         <button id="menuBtn" class="hamburger" aria-expanded="false" aria-label="Toggle navigation">☰</button>
       </div>
     </div>
