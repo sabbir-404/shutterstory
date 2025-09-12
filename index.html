@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!doctype html>
 <html lang="en">
 <head>
@@ -30,13 +29,14 @@
   <div class="nav-inner container">
     <a class="brand" href="/index.html" title="ShutterStory">
       <!-- white logo (shown on dark theme) -->
-      <img src="assets/logo/white-logo.png" alt="ShutterStory" class="logo-white" width="140" height="auto" />
+      <img src="assets/logo/white-logo.png" alt="ShutterStory" class="logo logo-white" />
 
       <!-- dark logo (shown on light theme) -->
-      <img src="assets/logo/dark-logo.png" alt="ShutterStory" class="logo-dark" width="140" height="auto" />
+      <img src="assets/logo/dark-logo.png" alt="ShutterStory" class="logo logo-dark" />
     </a>
 
-    <nav class="main-nav" aria-label="Main navigation">
+    <!-- main nav (id used by JS) -->
+    <nav id="mainNav" class="main-nav" aria-label="Main navigation">
       <a class="nav-link" href="#">Home</a>
       <a class="nav-link" href="Gallery/index.html">Gallery</a>
       <a class="nav-link" href="/Home_page.html#about">About</a>
@@ -51,24 +51,49 @@
 </header>
 
 
-  <!-- HERO / SLIDER -->
-  <section class="hero">
-    <div class="slider" id="heroSlider" aria-roledescription="carousel">
-      <div class="slide" style="background-image:url('assets/hero1.jpg')" data-index="0" role="group" aria-roledescription="slide"></div>
-      <div class="slide" style="background-image:url('assets/hero2.jpg')" data-index="1" role="group" aria-roledescription="slide"></div>
-      <div class="slide" style="background-image:url('assets/hero3.jpg')" data-index="2" role="group" aria-roledescription="slide"></div>
+<!-- NAV + HERO (keep your original slider structure & image sizes; white logo only) -->
+<header class="nav">
+  <div class="nav-inner container">
+    <a class="brand" href="/index.html" title="ShutterStory">
+      <!-- only white logo (we removed the theme-switching dark logo) -->
+      <img src="assets/logo/white-logo.png" alt="ShutterStory" class="logo" style="height:36px; width:auto; display:block;" />
+    </a>
 
-      <button class="slider-btn prev" data-action="prev" aria-label="Previous slide">‹</button>
-      <button class="slider-btn next" data-action="next" aria-label="Next slide">›</button>
+    <!-- give the nav an id so your JS can toggle it on mobile -->
+    <nav id="mainNav" class="main-nav" aria-label="Main navigation">
+      <a class="nav-link" href="#">Home</a>
+      <a class="nav-link" href="Gallery/index.html">Gallery</a>
+      <a class="nav-link" href="/Home_page.html#about">About</a>
+      <a class="nav-link" href="/Home_page.html#contact">Contact</a>
+    </nav>
 
-      <div class="dots" id="heroDots" aria-hidden="false"></div>
+    <div class="nav-controls">
+      <button id="themeToggle" class="theme-toggle" aria-pressed="false" title="Toggle light/dark theme">🌙</button>
+      <button id="menuBtn" class="hamburger" aria-expanded="false" aria-label="Toggle navigation">☰</button>
     </div>
+  </div>
+</header>
 
-    <div class="hero-caption container">
-      <h1>Moments. Light. Story.</h1>
-      <p class="muted">Photography by <strong>Sabbir Islam Alvi</strong> — capturing life one frame at a time.</p>
-    </div>
-  </section>
+<!-- HERO / SLIDER (exact same structure as you had — background images + caption overlay) -->
+<section class="hero">
+  <div class="slider" id="heroSlider" aria-roledescription="carousel">
+    <div class="slide" style="background-image:url('assets/hero1.jpg')" data-index="0" role="group" aria-roledescription="slide"></div>
+    <div class="slide" style="background-image:url('assets/hero2.jpg')" data-index="1" role="group" aria-roledescription="slide"></div>
+    <div class="slide" style="background-image:url('assets/hero3.jpg')" data-index="2" role="group" aria-roledescription="slide"></div>
+
+    <button class="slider-btn prev" data-action="prev" aria-label="Previous slide">‹</button>
+    <button class="slider-btn next" data-action="next" aria-label="Next slide">›</button>
+
+    <div class="dots" id="heroDots" aria-hidden="false"></div>
+  </div>
+
+  <!-- keep caption placement & sizing as before; force white text color so it's always white -->
+  <div class="hero-caption container" style="color:#ffffff;">
+    <h1>Moments. Light. Story.</h1>
+    <p class="muted" style="color:#ffffff;">Photography by <strong>Sabbir Islam Alvi</strong> — capturing life one frame at a time.</p>
+  </div>
+</section>
+
 
   <!-- FEATURED ALBUMS (rotating) -->
   <section class="featured-albums">
@@ -83,7 +108,6 @@
       </header>
 
       <div class="album-rotator" id="albumRotator" role="region" aria-live="polite">
-        <!-- Rotating album card (JS will update content) -->
         <article class="album-rotor-card" id="albumCard" aria-hidden="true">
           <div class="rotor-thumb" id="rotorThumb" style=""></div>
           <div class="rotor-meta">
@@ -107,7 +131,6 @@
     <p class="muted">A snapshot of honors, publications and milestones.</p>
 
     <div class="achievement-grid">
-      <!-- Achievement 1 -->
       <article class="achievement-row">
         <img class="achievement-thumb" src="assets/Achievements/achievement-1.jpg" alt="IIIUPE 2024">
         <div class="achievement-meta">
@@ -119,18 +142,14 @@
   </div>
 </section>
 
-
-
-
   <!-- ABOUT -->
   <section id="about" class="about">
-    <div class="container split">
-      <div>
+    <div class="container split about-wrap">
+      <div class="about-text">
         <h2>About Me</h2>
         <p>Hello — I'm <strong>Sabbir Islam Alvi</strong>. I make photographs that tell stories. I shoot weddings, travel and commissioned portrait sessions. Based in [Your City].</p>
         <p>Available for commissions worldwide — <a href="#contact">get in touch</a>.</p>
 
-        <!-- Socials block (also duplicated in footer) -->
         <div class="socials">
           <a class="social-link" href="https://instagram.com/yourhandle" target="_blank" rel="noopener">
             <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.7A3.3 3.3 0 1 0 15.3 12 3.3 3.3 0 0 0 12 8.7zM18.4 6.1a.9.9 0 1 1-.9-.9.9.9 0 0 1 .9.9z"/></svg>
@@ -144,7 +163,6 @@
         </div>
       </div>
 
-      <!-- round portrait on the right -->
       <div class="about-image round" style="background-image:url('assets/about.jpg')" aria-hidden="true"></div>
     </div>
   </section>
@@ -163,8 +181,9 @@
     </div>
   </footer>
 
+  <!-- scripts: only include your site script once (defer) -->
   <script src="js/scripts.js" defer></script>
-  <script src="js/albums.js" defer></script>
+  <script src="js/albums.js" defer></script> <!-- keep albums.js if you need it -->
 
 </body>
 </html>

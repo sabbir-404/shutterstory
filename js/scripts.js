@@ -1,118 +1,202 @@
 // js/scripts.js
-// Shared site features: loader, nav, theme toggle, hero slider.
+// Consolidated site script — theme, loader, nav, hero slider, album rotator, lightbox swipe (if used).
 
 document.addEventListener("DOMContentLoaded", () => {
   /* Loader fade out */
   const loader = document.getElementById("loader");
   if (loader) {
     window.addEventListener("load", () => {
-      setTimeout(() => loader.classList.add("hidden"), 600);
+      setTimeout(() => loader.classList.add("hidden"), 500);
     });
   }
 
-  /* Year in footer */
-  const y1 = document.getElementById("year");
-  const y2 = document.getElementById("year2");
-  const year = new Date().getFullYear();
-  if (y1) y1.textContent = year;
-  if (y2) y2.textContent = year;
+  /* Year */
+  const y = document.getElementById("year");
+  if (y) y.textContent = new Date().getFullYear();
 
-  /* Hamburger toggle */
+  /* NAV: hamburger toggles body.nav-open (CSS shows nav when nav-open) */
   const menuBtn = document.getElementById("menuBtn");
-  const nav = document.querySelector(".main-nav");
-  if (menuBtn && nav) {
+  const bodyEl = document.body;
+  if (menuBtn) {
     menuBtn.addEventListener("click", () => {
-      const expanded = menuBtn.getAttribute("aria-expanded") === "true";
-      menuBtn.setAttribute("aria-expanded", !expanded);
-      nav.style.display = expanded ? "none" : "flex";
+      const open = bodyEl.classList.toggle("nav-open");
+      menuBtn.setAttribute("aria-expanded", open ? "true" : "false");
+      // prevent background scroll when menu open
+      document.documentElement.style.overflow = open ? "hidden" : "";
     });
   }
 
-  /* Theme toggle */
+  /* THEME: toggle, persist */
   const themeBtn = document.getElementById("themeToggle");
-  const body = document.body;
   if (themeBtn) {
-    // load saved theme or default dark
-    const savedTheme = localStorage.getItem("theme") || "dark";
-    body.setAttribute("data-theme", savedTheme);
-    themeBtn.textContent = savedTheme === "light" ? "☀️" : "🌙";
+    const saved = localStorage.getItem("theme") || bodyEl.getAttribute("data-theme") || "dark";
+    bodyEl.setAttribute("data-theme", saved);
+    themeBtn.textContent = saved === "light" ? "☀️" : "🌙";
 
     themeBtn.addEventListener("click", () => {
-      const current = body.getAttribute("data-theme");
+      const current = bodyEl.getAttribute("data-theme") || "dark";
       const next = current === "dark" ? "light" : "dark";
-      body.setAttribute("data-theme", next);
+      bodyEl.setAttribute("data-theme", next);
       themeBtn.textContent = next === "light" ? "☀️" : "🌙";
       localStorage.setItem("theme", next);
     });
   }
 
-  /* Hero slider (home page only) */
-  const slides = document.querySelectorAll(".slide");
-  const dots = document.getElementById("heroDots");
-  if (slides.length > 0 && dots) {
-    let index = 0;
+  /* HERO SLIDER: reveal after decode, dots, autoplay */
+  (function hero() {
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const dotsWrap = document.getElementById("heroDots");
+    if (!slides.length || !dotsWrap) return;
 
-    function showSlide(i) {
-      slides.forEach((s, idx) =>
-        s.classList.toggle("active", idx === i)
-      );
-      dots.querySelectorAll("button").forEach((d, idx) =>
-        d.classList.toggle("active", idx === i)
-      );
-      index = i;
-    }
+    let idx = 0;
+    const INTERVAL = 6000;
+    let timer = null;
 
     // build dots
     slides.forEach((_, i) => {
       const b = document.createElement("button");
-      b.addEventListener("click", () => showSlide(i));
-      dots.appendChild(b);
+      b.type = "button";
+      b.addEventListener("click", () => show(i));
+      dotsWrap.appendChild(b);
     });
 
-    // buttons
+    async function reveal(el) {
+      const img = el.querySelector("img.slide-img");
+      if (!img) { el.classList.add("active"); return; }
+      if (img.complete && img.naturalWidth) { el.classList.add("active"); return; }
+
+      await new Promise(res => {
+        if (img.complete) return res();
+        img.addEventListener("load", res, { once: true });
+        img.addEventListener("error", res, { once: true });
+      });
+      if (img.decode) {
+        try { await img.decode(); } catch(e) {}
+      }
+      el.classList.add("active");
+    }
+
+    function hideAll() {
+      slides.forEach(s => s.classList.remove("active"));
+      dotsWrap.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+    }
+
+    function show(i) {
+      i = (i + slides.length) % slides.length;
+      hideAll();
+      reveal(slides[i]);
+      const btn = dotsWrap.querySelectorAll("button")[i];
+      if (btn) btn.classList.add("active");
+      idx = i;
+    }
+
+    // wired buttons
     document.querySelectorAll(".slider-btn").forEach(btn => {
       btn.addEventListener("click", () => {
-        if (btn.dataset.action === "prev") {
-          showSlide((index - 1 + slides.length) % slides.length);
-        } else {
-          showSlide((index + 1) % slides.length);
-        }
+        if (btn.dataset.action === "prev") show(idx - 1);
+        else show(idx + 1);
+        reset();
       });
     });
 
-    // autoplay
-    setInterval(() => {
-      showSlide((index + 1) % slides.length);
-    }, 6000);
+    function start() { if (!timer) timer = setInterval(() => show(idx + 1), INTERVAL); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function reset() { stop(); start(); }
 
-    showSlide(0);
-  }
-});
+    const sliderEl = document.getElementById("heroSlider");
+    if (sliderEl) {
+      sliderEl.addEventListener("mouseenter", stop);
+      sliderEl.addEventListener("mouseleave", start);
+      sliderEl.addEventListener("touchstart", stop, { passive: true });
+      sliderEl.addEventListener("touchend", start, { passive: true });
+    }
 
-// add to js/scripts.js (or include after it)
-document.addEventListener('DOMContentLoaded', () => {
-  // mobile nav toggle: toggles body.nav-open for CSS to show the menu
-  const menuBtn = document.getElementById('menuBtn');
-  const body = document.body;
-  const mainNav = document.getElementById('mainNav');
+    show(0);
+    start();
+  })();
 
-  if (menuBtn) {
-    menuBtn.addEventListener('click', () => {
-      const isOpen = body.classList.toggle('nav-open');
-      menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      // optional: prevent body scroll when menu open
-      if (isOpen) document.documentElement.style.overflow = 'hidden';
-      else document.documentElement.style.overflow = '';
-    });
-  }
+  /* FEATURED ALBUM ROTATOR: animated transitions + autoplay + prev/next */
+  (function rotator() {
+    const albums = window.ALBUMS || {};
+    const keys = Object.keys(albums);
+    if (!keys.length) return;
 
-  // simple lightbox swipe support (works with your current #lightbox and lb-prev/lb-next)
-  const lightbox = document.getElementById('lightbox');
-  if (lightbox) {
-    let startX = 0;
-    let startY = 0;
-    let tracking = false;
+    const thumb = document.getElementById("rotorThumb");
+    const title = document.getElementById("rotorTitle");
+    const desc  = document.getElementById("rotorDesc");
+    const view  = document.getElementById("rotorView");
+    const card  = document.getElementById("albumCard");
+    const prev  = document.getElementById("featPrev");
+    const next  = document.getElementById("featNext");
+    const rotatorWrap = document.getElementById("albumRotator");
 
+    let idx = 0;
+    let timer = null;
+    const INTERVAL = 5000;
+
+    function render(i, direction = 'right') {
+      const k = keys[(i + keys.length) % keys.length];
+      const data = albums[k];
+      if (!data) return;
+
+      // play slide-out animation
+      if (card) {
+        card.classList.remove('slide-in', 'slide-out-left', 'slide-out-right');
+        // decide exit direction
+        card.classList.add(direction === 'left' ? 'slide-out-left' : 'slide-out-right');
+      }
+
+      // after short timeout swap content then slide-in
+      setTimeout(() => {
+        if (thumb) thumb.style.backgroundImage = `url("${encodeURI(data.thumb)}")`;
+        if (title) title.textContent = data.title || k;
+        if (desc) desc.textContent = data.desc || '';
+        if (view) view.setAttribute('href', `gallery/index.html?album=${encodeURIComponent(k)}`);
+
+        if (card) {
+          // force reflow to restart animation
+          card.offsetHeight;
+          card.classList.remove('slide-out-left', 'slide-out-right');
+          card.classList.add('slide-in');
+        }
+      }, 240); // match transition in CSS
+      idx = (i + keys.length) % keys.length;
+    }
+
+    function nextAlbum() { render(idx + 1, 'right'); reset(); }
+    function prevAlbum() { render(idx - 1, 'left'); reset(); }
+
+    if (next) next.addEventListener('click', () => nextAlbum());
+    if (prev) prev.addEventListener('click', () => prevAlbum());
+
+    function start() { if (!timer) timer = setInterval(() => nextAlbum(), INTERVAL); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function reset() { stop(); start(); }
+
+    if (rotatorWrap) {
+      rotatorWrap.addEventListener('mouseenter', stop);
+      rotatorWrap.addEventListener('mouseleave', start);
+      rotatorWrap.addEventListener('focusin', stop);
+      rotatorWrap.addEventListener('focusout', start);
+    }
+
+    // keyboard accessibility
+    if (rotatorWrap) {
+      rotatorWrap.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') prevAlbum();
+        if (e.key === 'ArrowRight') nextAlbum();
+      });
+    }
+
+    render(0);
+    start();
+  })();
+
+  /* optional: simple lightbox swipe support (requires existing #lightbox + controls) */
+  (function lightboxSwipe(){
+    const lightbox = document.getElementById('lightbox');
+    if (!lightbox) return;
+    let startX = 0, startY = 0, tracking = false;
     lightbox.addEventListener('touchstart', (e) => {
       if (e.touches && e.touches.length === 1) {
         startX = e.touches[0].clientX;
@@ -122,7 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
 
     lightbox.addEventListener('touchmove', (e) => {
-      // prevent page scroll when swiping horizontally significantly
       if (!tracking) return;
       const dx = Math.abs(e.touches[0].clientX - startX);
       const dy = Math.abs(e.touches[0].clientY - startY);
@@ -134,99 +217,10 @@ document.addEventListener('DOMContentLoaded', () => {
       tracking = false;
       const endX = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0].clientX : startX;
       const dx = endX - startX;
-      const threshold = 40; // px
-      if (dx > threshold) {
-        // swipe right -> previous
-        const prev = document.querySelector('.lb-prev');
-        if (prev) prev.click();
-      } else if (dx < -threshold) {
-        // swipe left -> next
-        const next = document.querySelector('.lb-next');
-        if (next) next.click();
-      }
+      const threshold = 40;
+      if (dx > threshold) { const prev = document.querySelector('.lb-prev'); if (prev) prev.click(); }
+      else if (dx < -threshold) { const next = document.querySelector('.lb-next'); if (next) next.click(); }
     }, { passive: true });
-  }
-});
+  })();
 
-// Featured album rotator – add to js/scripts.js (append or inside DOMContentLoaded)
-(function initAlbumRotator(){
-  const albums = window.ALBUMS || {};
-  const keys = Object.keys(albums);
-  if (!keys.length) return;
-
-  const thumbEl = document.getElementById('rotorThumb');
-  const titleEl = document.getElementById('rotorTitle');
-  const descEl  = document.getElementById('rotorDesc');
-  const viewEl  = document.getElementById('rotorView');
-  const cardEl  = document.getElementById('albumCard');
-  const rotator = document.getElementById('albumRotator');
-  const prevBtn = document.getElementById('featPrev');
-  const nextBtn = document.getElementById('featNext');
-
-  let idx = 0;
-  let autoplayTimer = null;
-  const INTERVAL = 5000; // 5s
-
-  function show(i) {
-    idx = (i + keys.length) % keys.length;
-    const k = keys[idx];
-    const data = albums[k];
-    if (!data) return;
-
-    // set background image (thumbnail)
-    if (thumbEl) thumbEl.style.backgroundImage = `url("${encodeURI(data.thumb)}")`;
-
-    if (titleEl) titleEl.textContent = data.title || k;
-    if (descEl) descEl.textContent = data.desc || '';
-    if (viewEl) {
-      // link to gallery page with album param (assumes gallery/index.html accepts ?album=KEY)
-      viewEl.setAttribute('href', `gallery/index.html?album=${encodeURIComponent(k)}`);
-    }
-
-    // animate the card
-    if (cardEl) {
-      cardEl.classList.remove('fade-in');
-      // force reflow
-      // eslint-disable-next-line no-unused-expressions
-      cardEl.offsetHeight;
-      cardEl.classList.add('fade-in');
-      cardEl.setAttribute('aria-hidden', 'false');
-    }
-  }
-
-  function next() { show(idx + 1); }
-  function prev() { show(idx - 1); }
-
-  if (nextBtn) nextBtn.addEventListener('click', () => {
-    next();
-    resetAutoplay();
-  });
-  if (prevBtn) prevBtn.addEventListener('click', () => {
-    prev();
-    resetAutoplay();
-  });
-
-  // pause on hover or focus
-  function pauseAutoplay() { if (autoplayTimer) { clearInterval(autoplayTimer); autoplayTimer = null; } }
-  function startAutoplay() { if (!autoplayTimer) autoplayTimer = setInterval(() => next(), INTERVAL); }
-  function resetAutoplay(){ pauseAutoplay(); startAutoplay(); }
-
-  if (rotator) {
-    rotator.addEventListener('mouseenter', pauseAutoplay);
-    rotator.addEventListener('mouseleave', startAutoplay);
-    rotator.addEventListener('focusin', pauseAutoplay);
-    rotator.addEventListener('focusout', startAutoplay);
-  }
-
-  // keyboard navigation for accessibility
-  if (rotator) {
-    rotator.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight') { next(); resetAutoplay(); }
-      if (e.key === 'ArrowLeft') { prev(); resetAutoplay(); }
-    });
-  }
-
-  // initial show + autoplay
-  show(0);
-  startAutoplay();
-})();
+}); // DOMContentLoaded

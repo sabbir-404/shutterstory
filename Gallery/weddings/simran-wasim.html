@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Farabi & Tisha Wedding — YourName</title>
+
+  <!-- main styles first -->
+  <link rel="stylesheet" href="../../css/styles.css">
+  <!-- wedding-specific styles -->
+  <link rel="stylesheet" href="../../css/wedding.css">
+  <!-- gallery-specific styles -->
+  <link rel="stylesheet" href="../../css/gallery.css">
+</head>
+<body>
+  <!-- NAV: keep same structure as home (theme toggle etc) -->
+  <header class="nav">
+    <div class="nav-inner container">
+      <a class="brand" href="../../index.html">YourName</a>
+
+      <!-- NOTE: added id="mainNav" so the hamburger can reference it via aria-controls -->
+      <nav id="mainNav" class="main-nav" aria-label="Main navigation">
+        <a class="nav-link" href="../../index.html">Home</a>
+        <a class="nav-link" href="../index.html">Gallery</a>
+        <a class="nav-link" href="../weddings.html">Weddings</a>
+        <a class="nav-link" href="../../index.html#about">About</a>
+        <a class="nav-link" href="../../index.html#contact">Contact</a>
+      </nav>
+
+      <div class="nav-controls">
+        <button id="themeToggle" class="theme-toggle" aria-pressed="false">🌙</button>
+        <!-- NOTE: added aria-controls="mainNav" for accessibility -->
+        <button id="menuBtn" class="hamburger" aria-expanded="false" aria-controls="mainNav" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO HEADER -->
+  <section class="hero-banner" style="background-image:url('../../assets/weddings/farabi-tisha/thumbnail.jpg')">
+    <div class="overlay">
+      <h1>Farabi & Tisha</h1>
+      <p>"Two souls, one journey, a lifetime of love."</p>
+    </div>
+  </section>
+
+  <main class="container">
+    <!-- Holud section: we provide data-pattern matching your filenames -->
+    <section class="wedding-section">
+      <h2>Holud Ceremony</h2>
+      <p class="muted">A night of colors, laughter, and blessings.</p>
+
+      <!-- IMPORTANT: pattern uses {i} for the number; this matches "Holud Photo-1.jpg" -->
+      <div class="gallery-grid"
+           data-path="../../assets/weddings/simran-wasim/reception/"
+           data-count="62"
+           data-pattern="Reception-{i}.jpg">
+        <!-- JS will populate -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Lightbox (keeps same IDs the script expects) -->
+  <div id="lightbox" aria-hidden="true" tabindex="-1" class="lightbox">
+    <button class="lb-close" aria-label="Close">×</button>
+    <button class="lb-prev" aria-label="Previous">‹</button>
+    <img id="lightboxImg" src="" alt="">
+    <button class="lb-next" aria-label="Next">›</button>
+    <p id="lightboxCaption" class="muted"></p>
+  </div>
+
+  <!-- scripts: ensure path and casing match your folders (lowercase 'js') -->
+  <script src="../../js/gallery.js" defer></script>
+  <script src="../../js/scripts.js" defer></script>
+</body>
+</html>
