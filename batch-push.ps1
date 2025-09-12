@@ -1,31 +1,35 @@
 # batch-push.ps1
-# Splits files into batches of 50 and pushes them to GitHub
+# Commit and push image files in batches of 50
 
-# Get all untracked/tracked-but-modified files (except .git stuff)
-$files = git ls-files --others --modified --exclude-standard
+# Find all image files (adjust extensions as needed)
+$files = Get-ChildItem -Recurse -Include *.jpg, *.jpeg, *.png | Select-Object -ExpandProperty FullName
 
-# Batch size (you can adjust)
+# Batch size
 $batchSize = 50
 $counter = 0
 $batchNumber = 1
+$batchFiles = @()
 
 foreach ($file in $files) {
-    git add "$file"
+    $batchFiles += $file
     $counter++
 
     if ($counter -ge $batchSize) {
-        git commit -m "Batch $batchNumber of files"
+        git add $batchFiles
+        git commit -m "Batch $batchNumber of images"
         git push origin main
 
         Write-Host "✅ Pushed batch $batchNumber ($counter files)"
         $counter = 0
         $batchNumber++
+        $batchFiles = @()
     }
 }
 
-# Commit remaining files
+# Push remaining files
 if ($counter -gt 0) {
-    git commit -m "Final batch $batchNumber of files"
+    git add $batchFiles
+    git commit -m "Final batch $batchNumber of images"
     git push origin main
     Write-Host "✅ Pushed final batch $batchNumber ($counter files)"
 }
