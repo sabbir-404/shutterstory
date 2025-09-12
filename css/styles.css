@@ -152,35 +152,62 @@ body[data-theme="light"] .footer{border-top-color:rgba(0,0,0,0.06)}
   .album-rotor-card{flex-direction:column;align-items:flex-start}
 }
 
-/* ------------------------------- Mobile adjustments ------------------------------- */
+/* ------------------------------- Mobile + Featured Rotator + Achievements + About + Socials
+   Append this to css/styles.css
+   ------------------------------- */
 
-/* container narrower on phones */
-@media (max-width:420px) {
-  .container { padding-left:14px; padding-right:14px; }
+/* Mobile optimizations (mobile-first) */
+.container { padding-left: 16px; padding-right: 16px; }
+
+/* HERO adjustments for small screens */
+.hero .slider { height: 52vh; min-height: 260px; }
+.hero-caption h1 { font-size: 28px; }
+@media (max-width: 460px) {
+  .hero .slider { height: 44vh; }
+  .hero-caption h1 { font-size: 20px; }
 }
 
-/* Hero height adjustments */
-.hero .slider { height: 52vh; min-height:220px; }
-.hero-caption h1 { font-size:28px; }
+/* Featured album rotator responsiveness */
+.album-rotator { display:flex; justify-content:center; margin-top: 6px; }
+.album-rotor-card { display:flex; gap:16px; align-items:center; padding:14px; border-radius:12px; }
+.rotor-thumb { width:46%; height:180px; border-radius:10px; background-size:cover; background-position:center; flex-shrink:0; }
+.rotor-meta { flex:1; }
+.rotor-actions { margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; }
 
-/* smaller dots/buttons for touch */
-.slider-btn { padding:10px 12px; font-size:18px }
-.dots button { width:12px; height:12px; }
+/* Auto slide in/out animation for rotor */
+.album-rotor-card.fade-in { animation: fadeIn .36s ease both; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px) } to { opacity:1; transform: translateY(0) } }
 
-/* About portrait: float on small screens so it stays on the right and text wraps */
-.about-wrap { align-items:start; }
+/* Featured controls touch adjustments */
+.featured-controls .small-btn { padding:8px 10px; min-width:40px; }
+
+/* Make rotator stacked on small screens */
+@media (max-width:800px) {
+  .album-rotor-card { flex-direction: column; align-items:stretch; }
+  .rotor-thumb { width:100%; height:200px; }
+  .rotor-meta { padding-top:8px; text-align:center; }
+  .rotor-actions { justify-content:center; }
+}
+
+/* Achievements layout */
+.achievement-grid { display:grid; gap:14px; margin-top:16px; }
+.achievement-row { display:flex; gap:12px; align-items:flex-start; background:var(--panel); padding:12px; border-radius:10px; box-shadow:var(--shadow); }
+.achievement-thumb { width:120px; height:120px; object-fit:cover; border-radius:8px; flex-shrink:0; }
+.achievement-meta h3 { margin:0 0 6px; font-size:1rem; }
+.achievement-meta .small { font-size:0.92rem; color:var(--muted); margin:0; }
+
+/* Stack achievements on small screens */
 @media (max-width:720px) {
-  .split { display:block; }
-  .about-text { margin-right:0; }
-  .about-image.round {
-    float: right;
-    margin-left:12px;
-    width:120px;
-    height:120px;
-    border-radius:12px;
-    margin-top:6px;
-    box-shadow: var(--shadow);
-  }
+  .achievement-row { flex-direction:column; align-items:flex-start; }
+  .achievement-thumb { width:100%; height:180px; border-radius:10px; }
+}
+
+/* About: round portrait on right */
+.split { display:grid; grid-template-columns: 1fr 280px; gap:24px; align-items:center; }
+.about-image.round { width:220px; height:220px; border-radius:50%; background-size:cover; background-position:center; margin-left:auto; box-shadow:var(--shadow); }
+@media (max-width:900px) {
+  .split { grid-template-columns:1fr; }
+  .about-image.round { width:180px; height:180px; margin:18px 0 0 0; border-radius:20px; } /* less round on narrow screens to preserve layout */
 }
 
 /* Socials */
@@ -192,29 +219,104 @@ body[data-theme="light"] .footer{border-top-color:rgba(0,0,0,0.06)}
 /* Light adjustments for mobile tap targets */
 .btn, .small-btn { min-height:40px; }
 
-/* Logo theme switch - show relevant logo depending on theme */
-.brand img { display:none; height:36px; width:auto; object-fit:contain; }
-body[data-theme="dark"] .brand .logo-white { display:block; }
-body[data-theme="light"] .brand .logo-dark { display:block; }
+/* Minor: ensure hero dots and slider buttons are reachable on mobile */
+.slider-btn { padding:10px 14px; font-size:20px; }
+.dots button { width:14px; height:14px; padding:6px; border-radius:12px; }
 
-/* Accessibility: reduced-motion */
-@media (prefers-reduced-motion: reduce) {
-  .slide, .slider-btn, .dots button { transition: none !important; }
+/* keep animations accessible */
+@media (prefers-reduced-motion: reduce){ .album-rotor-card.fade-in, .hero .slide { animation: none !important; transition:none !important; } }
+
+/* Achievements Section */
+.achievements {
+  padding: 4rem 1rem;
 }
-/* ------------------- Append: small fixes & enhancements ------------------- */
 
-/* Ensure only the correct logo shows depending on theme */
+.achievement-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.achievement-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap; /* allows wrapping on small screens */
+}
+
+.achievement-thumb {
+  width: 160px;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.achievement-meta {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .achievement-row {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .achievement-thumb {
+    width: 100%;
+    max-width: 350px;
+  }
+}
+
+/* Logo theme switch - but we force a single logo display below */
+.brand img { display:none; height:36px; width:auto; object-fit:contain; }
+
+body[data-theme="dark"] .brand .logo-white { display:inline-block; }
+body[data-theme="light"] .brand .logo-dark { display:inline-block; }
+
+/* responsive tweak */
+@media (max-width:560px) {
+  .brand img { max-height:30px; }
+}
+
+/* =========================
+   Small overrides / fixes (appended)
+   ========================= */
+
+/* Ensure only the correct white logo shows — we rely on a single logo image (logo-white.png) */
 .brand img { display: none !important; height:36px; width:auto; object-fit:contain; }
-body[data-theme="dark"] .brand .logo-white { display: inline-block !important; }
-body[data-theme="light"] .brand .logo-dark { display: inline-block !important; }
+.brand .logo { display:inline-block !important; }
 
-/* subtle animated background accent behind hero (keeps content readable) */
+/* Remove any leftover display rule that could show the dark logo */
+body[data-theme="light"] .brand .logo-dark,
+body[data-theme="dark"] .brand .logo-dark { display: none !important; }
+
+/* Ensure mobile nav displayed when body.nav-open set (JS toggles this) */
+body.nav-open .main-nav { display:flex !important; }
+
+/* About portrait: keep it floating on right on small screens so text wraps */
+@media (max-width:720px) {
+  .split { display:block; }
+  .about-image.round {
+    float: right;
+    margin-left: 12px;
+    width: 120px;
+    height: 120px;
+    border-radius: 12px;
+  }
+  .about-wrap { overflow: hidden; } /* contain float */
+}
+
+/* Slight visual background accent kept (white-friendly) */
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(800px 300px at 10% 20%, rgba(74,163,255,0.06), transparent 10%),
-              radial-gradient(600px 220px at 90% 80%, rgba(123,211,137,0.04), transparent 10%);
+  background: radial-gradient(800px 300px at 10% 20%, rgba(255,255,255,0.02), transparent 10%),
+              radial-gradient(600px 220px at 90% 80%, rgba(255,255,255,0.01), transparent 10%);
   pointer-events: none;
   z-index: 0;
   mix-blend-mode: screen;
@@ -238,9 +340,6 @@ body[data-theme="light"] .brand .logo-dark { display: inline-block !important; }
   .album-rotor-card:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 18px 42px rgba(0,0,0,0.28); }
 }
 
-/* Ensure mobile nav displayed when body.nav-open set (JS toggles this) */
-body.nav-open .main-nav { display:flex !important; }
-
 /* About portrait float fix for small devices — keeps it from dropping below text */
 @media (max-width:720px) {
   .about-image.round {
@@ -263,4 +362,10 @@ body[data-theme="light"] .container { background: transparent; }
 /* Small accessibility improvement: focus outlines for keyboard users */
 a:focus, button:focus { outline: 3px solid rgba(74,163,255,0.12); outline-offset: 3px; }
 
-/* end of append */
+/* small feedback for disabled theme button (if present) */
+.theme-toggle.inactive-flash { transform: translateY(-2px) scale(1.02); transition: transform 180ms ease; }
+
+/* Accessibility: reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .slide, .slider-btn, .dots button, .album-rotor-card { transition: none !important; animation: none !important; }
+}

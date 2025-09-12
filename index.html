@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>shutterstory</title>
 
-  <!-- local CSS -->
+  <!-- main stylesheet (keep all existing rules) -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body data-theme="dark"><!-- dark theme is default -->
+<body data-theme="dark"><!-- keep data-theme if you use it elsewhere; logos won't change -->
+
   <!-- LOADER / SPLASH -->
   <div id="loader" class="loader" role="status" aria-live="polite" aria-hidden="false">
     <svg id="loaderLogo" viewBox="0 0 120 120" width="120" height="120" aria-hidden="true">
@@ -24,76 +25,47 @@
     </svg>
   </div>
 
-  <!-- NAV -->
-<header class="nav">
-  <div class="nav-inner container">
-    <a class="brand" href="/index.html" title="ShutterStory">
-      <!-- white logo (shown on dark theme) -->
-      <img src="assets/logo/white-logo.png" alt="ShutterStory" class="logo logo-white" />
+  <!-- NAV (single header; white logo only) -->
+  <header class="nav">
+    <div class="nav-inner container">
+      <a class="brand" href="/index.html" title="ShutterStory">
+        <!-- only white logo — use this single image, path relative to project root -->
+        <img src="assets/logo/white-logo.png" alt="ShutterStory" class="logo" />
+      </a>
 
-      <!-- dark logo (shown on light theme) -->
-      <img src="assets/logo/dark-logo.png" alt="ShutterStory" class="logo logo-dark" />
-    </a>
+      <!-- main nav; JS toggles body.nav-open to show/hide on mobile -->
+      <nav id="mainNav" class="main-nav" aria-label="Main navigation">
+        <a class="nav-link" href="#">Home</a>
+        <a class="nav-link" href="Gallery/index.html">Gallery</a>
+        <a class="nav-link" href="/index.html#about">About</a>
+        <a class="nav-link" href="/index.html#contact">Contact</a>
+      </nav>
 
-    <!-- main nav (id used by JS) -->
-    <nav id="mainNav" class="main-nav" aria-label="Main navigation">
-      <a class="nav-link" href="#">Home</a>
-      <a class="nav-link" href="Gallery/index.html">Gallery</a>
-      <a class="nav-link" href="/Home_page.html#about">About</a>
-      <a class="nav-link" href="/Home_page.html#contact">Contact</a>
-    </nav>
-
-    <div class="nav-controls">
-      <button id="themeToggle" class="theme-toggle" aria-pressed="false" title="Toggle light/dark theme">🌙</button>
-      <button id="menuBtn" class="hamburger" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+      <div class="nav-controls">
+        <!-- removed theme toggle (site will stay white logo / consistent color) -->
+        <button id="menuBtn" class="hamburger" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+      </div>
     </div>
-  </div>
-</header>
+  </header>
 
+  <!-- HERO / SLIDER (unchanged - keep as you had it) -->
+  <section class="hero">
+    <div class="slider" id="heroSlider" aria-roledescription="carousel">
+      <div class="slide" style="background-image:url('assets/hero1.jpg')" data-index="0" role="group" aria-roledescription="slide"></div>
+      <div class="slide" style="background-image:url('assets/hero2.jpg')" data-index="1" role="group" aria-roledescription="slide"></div>
+      <div class="slide" style="background-image:url('assets/hero3.jpg')" data-index="2" role="group" aria-roledescription="slide"></div>
 
-<!-- NAV + HERO (keep your original slider structure & image sizes; white logo only) -->
-<header class="nav">
-  <div class="nav-inner container">
-    <a class="brand" href="/index.html" title="ShutterStory">
-      <!-- only white logo (we removed the theme-switching dark logo) -->
-      <img src="assets/logo/white-logo.png" alt="ShutterStory" class="logo" style="height:36px; width:auto; display:block;" />
-    </a>
+      <button class="slider-btn prev" data-action="prev" aria-label="Previous slide">‹</button>
+      <button class="slider-btn next" data-action="next" aria-label="Next slide">›</button>
 
-    <!-- give the nav an id so your JS can toggle it on mobile -->
-    <nav id="mainNav" class="main-nav" aria-label="Main navigation">
-      <a class="nav-link" href="#">Home</a>
-      <a class="nav-link" href="Gallery/index.html">Gallery</a>
-      <a class="nav-link" href="/Home_page.html#about">About</a>
-      <a class="nav-link" href="/Home_page.html#contact">Contact</a>
-    </nav>
-
-    <div class="nav-controls">
-      <button id="themeToggle" class="theme-toggle" aria-pressed="false" title="Toggle light/dark theme">🌙</button>
-      <button id="menuBtn" class="hamburger" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+      <div class="dots" id="heroDots" aria-hidden="false"></div>
     </div>
-  </div>
-</header>
 
-<!-- HERO / SLIDER (exact same structure as you had — background images + caption overlay) -->
-<section class="hero">
-  <div class="slider" id="heroSlider" aria-roledescription="carousel">
-    <div class="slide" style="background-image:url('assets/hero1.jpg')" data-index="0" role="group" aria-roledescription="slide"></div>
-    <div class="slide" style="background-image:url('assets/hero2.jpg')" data-index="1" role="group" aria-roledescription="slide"></div>
-    <div class="slide" style="background-image:url('assets/hero3.jpg')" data-index="2" role="group" aria-roledescription="slide"></div>
-
-    <button class="slider-btn prev" data-action="prev" aria-label="Previous slide">‹</button>
-    <button class="slider-btn next" data-action="next" aria-label="Next slide">›</button>
-
-    <div class="dots" id="heroDots" aria-hidden="false"></div>
-  </div>
-
-  <!-- keep caption placement & sizing as before; force white text color so it's always white -->
-  <div class="hero-caption container" style="color:#ffffff;">
-    <h1>Moments. Light. Story.</h1>
-    <p class="muted" style="color:#ffffff;">Photography by <strong>Sabbir Islam Alvi</strong> — capturing life one frame at a time.</p>
-  </div>
-</section>
-
+    <div class="hero-caption container" style="color:#ffffff;">
+      <h1>Moments. Light. Story.</h1>
+      <p class="muted" style="color:#ffffff;">Photography by <strong>Sabbir Islam Alvi</strong> — capturing life one frame at a time.</p>
+    </div>
+  </section>
 
   <!-- FEATURED ALBUMS (rotating) -->
   <section class="featured-albums">
@@ -103,7 +75,7 @@
         <div class="featured-controls">
           <button id="featPrev" class="small-btn" aria-label="Previous album">‹</button>
           <button id="featNext" class="small-btn" aria-label="Next album">›</button>
-          <a class="btn outline" href="gallery/index.html" title="See all galleries">See all galleries</a>
+          <a class="btn outline" href="Gallery/index.html" title="See all galleries">See all galleries</a>
         </div>
       </header>
 
@@ -115,7 +87,7 @@
             <p id="rotorDesc" class="muted">Short description</p>
             <div class="rotor-actions">
               <a id="rotorView" class="btn" href="#">View album</a>
-              <a id="rotorMore" class="btn outline" href="gallery/index.html">See all galleries</a>
+              <a id="rotorMore" class="btn outline" href="Gallery/index.html">See all galleries</a>
             </div>
           </div>
         </article>
@@ -123,24 +95,23 @@
     </div>
   </section>
 
-
   <!-- ACHIEVEMENTS -->
-<section class="achievements">
-  <div class="container">
-    <h2>Achievements</h2>
-    <p class="muted">A snapshot of honors, publications and milestones.</p>
+  <section class="achievements">
+    <div class="container">
+      <h2>Achievements</h2>
+      <p class="muted">A snapshot of honors, publications and milestones.</p>
 
-    <div class="achievement-grid">
-      <article class="achievement-row">
-        <img class="achievement-thumb" src="assets/Achievements/achievement-1.jpg" alt="IIIUPE 2024">
-        <div class="achievement-meta">
-          <h3>First Place — Life Category</h3>
-          <p class="muted small">2024 — Selected for intimate storytelling and natural-light portraits.</p>
-        </div>
-      </article>
+      <div class="achievement-grid">
+        <article class="achievement-row">
+          <img class="achievement-thumb" src="assets/Achievements/achievement-1.jpg" alt="IIIUPE 2024">
+          <div class="achievement-meta">
+            <h3>First Place — Life Category</h3>
+            <p class="muted small">2024 — Selected for intimate storytelling and natural-light portraits.</p>
+          </div>
+        </article>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
   <!-- ABOUT -->
   <section id="about" class="about">
@@ -167,7 +138,6 @@
     </div>
   </section>
 
-
   <!-- CONTACT / FOOTER -->
   <footer id="contact" class="footer">
     <div class="container">
@@ -181,9 +151,9 @@
     </div>
   </footer>
 
-  <!-- scripts: only include your site script once (defer) -->
+  <!-- scripts: include once -->
   <script src="js/scripts.js" defer></script>
-  <script src="js/albums.js" defer></script> <!-- keep albums.js if you need it -->
+  <script src="js/albums.js" defer></script>
 
 </body>
 </html>

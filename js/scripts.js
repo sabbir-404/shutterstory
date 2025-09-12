@@ -224,3 +224,10 @@ document.addEventListener("DOMContentLoaded", () => {
   })();
 
 }); // DOMContentLoaded
+
+// ensure mobile nav hidden by default (CSS will show it when body.nav-open)
+document.addEventListener('DOMContentLoaded', () => {
+  const bodyEl = document.body;
+  // remove any accidental nav-open left in markup
+  bodyEl.classList.remove('nav-open');
+});
