@@ -13,6 +13,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/gallery/:slug" element={<Album />} />
+        <Route path="/weddings/:slug" element={<Album />} />
       </Routes>
       <Footer />
     </BrowserRouter>
