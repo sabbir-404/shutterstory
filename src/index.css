@@ -5,3 +5,16 @@
 body {
   @apply bg-bg text-accent antialiased;
 }
+
+::selection {
+  background: rgba(255,255,255,0.1);
+}
+.btn {
+  @apply px-6 py-3 rounded-md border border-borderSoft
+         transition-all duration-300
+         hover:bg-accent hover:text-bg;
+}
+
+.btn-ghost {
+  @apply text-soft hover:text-accent;
+}
