@@ -7,7 +7,7 @@ import Footer from './components/Footer'
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/shutterstory">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
