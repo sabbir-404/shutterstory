@@ -18,3 +18,16 @@ body {
 .btn-ghost {
   @apply text-soft hover:text-accent;
 }
+.btn {
+  @apply px-6 py-3 rounded-md
+         border border-borderSoft
+         transition-all duration-300
+         hover:bg-accent hover:text-bg
+         active:scale-[0.98];
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

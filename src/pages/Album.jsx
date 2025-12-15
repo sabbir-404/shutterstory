@@ -12,9 +12,10 @@ export default function Album() {
   const [photos, setPhotos] = useState([])
   const [activeIndex, setActiveIndex] = useState(null)
 
-  // Fetch album + photos
+  /* ================= FETCH DATA ================= */
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchAlbumAndPhotos = async () => {
+      // Fetch album by slug
       const { data: albumData } = await supabase
         .from('albums')
         .select('*')
@@ -23,6 +24,7 @@ export default function Album() {
 
       setAlbum(albumData)
 
+      // Fetch photos only if album exists
       if (albumData?.id) {
         const { data: photoData } = await supabase
           .from('photos')
@@ -34,24 +36,25 @@ export default function Album() {
       }
     }
 
-    fetchData()
+    fetchAlbumAndPhotos()
   }, [slug])
 
-  // Keyboard navigation for lightbox
+  /* ================= KEYBOARD CONTROLS ================= */
   useEffect(() => {
-    const handleKey = (e) => {
+    const handleKeyDown = (e) => {
       if (activeIndex === null) return
+
       if (e.key === 'Escape') setActiveIndex(null)
       if (e.key === 'ArrowLeft') {
-        setActiveIndex(i => Math.max(i - 1, 0))
+        setActiveIndex((i) => Math.max(i - 1, 0))
       }
       if (e.key === 'ArrowRight') {
-        setActiveIndex(i => Math.min(i + 1, photos.length - 1))
+        setActiveIndex((i) => Math.min(i + 1, photos.length - 1))
       }
     }
 
-    window.addEventListener('keydown', handleKey)
-    return () => window.removeEventListener('keydown', handleKey)
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [activeIndex, photos.length])
 
   if (!album) return null
@@ -59,7 +62,7 @@ export default function Album() {
   return (
     <main>
       {/* ================= HERO ================= */}
-      <section className="h-[65vh] relative">
+      <section className="relative h-[60vh] sm:h-[65vh]">
         <img
           src={album.cover_bg_url}
           alt={album.title}
@@ -73,7 +76,7 @@ export default function Album() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1 }}
-              className="font-display text-5xl mb-4"
+              className="font-display text-4xl sm:text-5xl mb-4"
             >
               {album.title}
             </motion.h1>
@@ -91,16 +94,20 @@ export default function Album() {
         </div>
       </section>
 
-      {/* ================= GRID ================= */}
+      {/* ================= PHOTO GRID ================= */}
       <section
-        className="px-6 py-20 columns-1 sm:columns-2 md:columns-3 gap-4"
+        className="
+          px-4 sm:px-6 py-16 sm:py-20
+          columns-1 sm:columns-2 lg:columns-3
+          gap-4
+        "
         onContextMenu={(e) => e.preventDefault()}
       >
-        {photos.map((p, i) => (
+        {photos.map((photo, index) => (
           <img
-            key={p.id}
-            src={p.url}
-            alt={p.alt || album.title}
+            key={photo.id}
+            src={photo.url}
+            alt={photo.alt || album.title}
             loading="lazy"
             decoding="async"
             draggable={false}
@@ -110,18 +117,18 @@ export default function Album() {
               opacity-0
             "
             onLoad={(e) => e.currentTarget.classList.remove('opacity-0')}
-            onClick={() => setActiveIndex(i)}
+            onClick={() => setActiveIndex(index)}
           />
         ))}
       </section>
 
       {/* ================= LIGHTBOX ================= */}
       <Lightbox
-        images={photos.map(p => p.url)}
+        images={photos.map((p) => p.url)}
         index={activeIndex}
         onClose={() => setActiveIndex(null)}
-        onPrev={() => setActiveIndex(i => i - 1)}
-        onNext={() => setActiveIndex(i => i + 1)}
+        onPrev={() => setActiveIndex((i) => i - 1)}
+        onNext={() => setActiveIndex((i) => i + 1)}
       />
     </main>
   )

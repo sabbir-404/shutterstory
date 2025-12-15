@@ -1,5 +1,5 @@
-    // eslint-disable-next-line no-unused-vars
-    import { motion } from 'framer-motion'
+// eslint-disable-next-line no-unused-vars
+import { motion } from 'framer-motion'
 
 const timeline = [
   {
@@ -7,7 +7,7 @@ const timeline = [
     title: 'The Beginning',
     desc: 'Picked up the camera and fell in love with storytelling.'
   },
-    {
+  {
     year: '2024',
     title: 'Live Concerts',
     desc: 'Started photographing concerts and live performances.'
@@ -40,12 +40,19 @@ export default function Timeline() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: i * 0.1 }}
               viewport={{ once: true }}
-              className="flex gap-8 items-start"
+              className="
+                flex flex-col
+                sm:flex-row
+                gap-6 sm:gap-8
+                items-start
+              "
             >
-              <div className="text-soft text-sm tracking-widest w-20">
+              {/* Year */}
+              <div className="text-soft text-sm tracking-widest sm:w-20">
                 {item.year}
               </div>
 
+              {/* Content */}
               <div>
                 <h3 className="text-xl mb-2">
                   {item.title}
