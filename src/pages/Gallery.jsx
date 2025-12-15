@@ -1,53 +1,48 @@
-import { useEffect, useState } from 'react'
-import { supabase } from '../lib/supabase'
 import { Link } from 'react-router-dom'
+// eslint-disable-next-line no-unused-vars
 import { motion } from 'framer-motion'
+import GalleryHero from '../components/GalleryHero'
+
+const categories = [
+  { slug: 'wedding', title: 'Wedding' },
+  { slug: 'concert', title: 'Concert' },
+  { slug: 'seminar', title: 'Seminars' },
+  { slug: 'travel', title: 'Travel' },
+  { slug: 'conference', title: 'Conference' },
+  { slug: 'cultural', title: 'Cultural Programs' }
+]
 
 export default function Gallery() {
-  const [albums, setAlbums] = useState([])
-
-  useEffect(() => {
-    supabase
-      .from('albums')
-      .select('*')
-      .eq('category', 'weddings')
-      .then(({ data }) => setAlbums(data))
-  }, [])
-
   return (
-    <main className="pt-24 px-6 max-w-7xl mx-auto">
-      <motion.h1
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="font-display text-4xl mb-12"
-      >
-        Weddings
-      </motion.h1>
+    <main>
+      {/* Hero */}
+      <GalleryHero />
 
-      <div className="grid md:grid-cols-2 gap-8">
-        {albums.map(album => (
-          <Link key={album.id} to={`/weddings/${album.slug}`}>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.5 }}
-              className="relative h-[420px] rounded-xl overflow-hidden"
-            >
-              <img
-                src={album.cover_bg_url}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-black/40 flex items-end p-6">
-                <h2 className="font-display text-2xl">
-                  {album.title}
-                </h2>
-              </div>
-            </motion.div>
-          </Link>
-        ))}
-      </div>
+      {/* Categories */}
+      <section className="max-w-7xl mx-auto px-6 py-24">
+        <h2 className="font-display text-4xl mb-12 text-center">
+          Event Categories
+        </h2>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          {categories.map((cat) => (
+            <Link key={cat.slug} to={`/gallery/${cat.slug}`}>
+              <motion.div
+                whileHover={{ scale: 1.03 }}
+                className="
+                  h-48 rounded-xl bg-panel
+                  flex items-center justify-center
+                  border border-borderSoft
+                "
+              >
+                <h3 className="text-2xl font-display">
+                  {cat.title}
+                </h3>
+              </motion.div>
+            </Link>
+          ))}
+        </div>
+      </section>
     </main>
   )
 }

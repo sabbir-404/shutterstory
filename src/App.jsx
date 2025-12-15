@@ -14,6 +14,9 @@ export default function App() {
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/gallery/:slug" element={<Album />} />
         <Route path="/weddings/:slug" element={<Album />} />
+        <Route path="/gallery" element={<Gallery />} />
+        <Route path="/gallery/:category" element={<Category />} />
+        <Route path="/gallery/:category/:slug" element={<Album />} />
       </Routes>
       <Footer />
     </BrowserRouter>
