@@ -3,22 +3,22 @@
 
 const timeline = [
   {
-    year: '2018',
+    year: '2023',
     title: 'The Beginning',
     desc: 'Picked up the camera and fell in love with storytelling.'
   },
-  {
-    year: '2020',
-    title: 'First Wedding',
-    desc: 'Captured my first full wedding — emotions changed everything.'
-  },
-  {
-    year: '2022',
+    {
+    year: '2024',
     title: 'Live Concerts',
     desc: 'Started photographing concerts and live performances.'
   },
   {
     year: '2024',
+    title: 'First Wedding',
+    desc: 'Captured my first full wedding — emotions changed everything.'
+  },
+  {
+    year: '2025',
     title: 'ShutterStory',
     desc: 'Turning moments into timeless visual stories.'
   }

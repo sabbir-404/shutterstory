@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
 
 const stats = [
-  { value: '10+', label: 'Years Experience' },
-  { value: '300+', label: 'Weddings Covered' },
-  { value: '50+', label: 'Concerts Shot' },
-  { value: '1000+', label: 'Stories Captured' }
+  { value: '3+', label: 'Years Experience' },
+  { value: '3', label: 'Weddings Covered' },
+  { value: '10', label: 'Concerts Shot' },
+  { value: '100+', label: 'Stories Captured' }
 ]
 
 export default function Achievements() {
