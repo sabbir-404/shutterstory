@@ -33,6 +33,8 @@ export default function Album() {
           .order('created_at')
 
         setPhotos(photoData || [])
+        console.log('Album:', albumData)
+        console.log('Photos:', photoData)
       }
     }
 
