@@ -8,17 +8,14 @@ import Footer from './components/Footer'
 
 export default function App() {
   return (
-    <BrowserRouter basename="/shutterstory">
+    <BrowserRouter>
       <Navbar />
-
       <Routes>
         <Route path="/" element={<Home />} />
-        {/* Gallery flow */}
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/gallery/:category" element={<Category />} />
         <Route path="/gallery/:category/:slug" element={<Album />} />
       </Routes>
-
       <Footer />
     </BrowserRouter>
   )
