@@ -18,31 +18,24 @@ export default function Gallery() {
         Gallery
       </h1>
 
-      {/* Categories */}
-      <section className="max-w-7xl mx-auto px-6 py-24">
-        <h2 className="font-display text-4xl mb-12 text-center">
-          Event Categories
-        </h2>
-
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {categories.map((cat) => (
-            <Link key={cat.slug} to={`/gallery/${cat.slug}`}>
-              <motion.div
-                whileHover={{ scale: 1.03 }}
-                className="
-                  h-48 rounded-xl bg-panel
-                  flex items-center justify-center
-                  border border-borderSoft
-                "
-              >
-                <h3 className="text-2xl font-display">
-                  {cat.title}
-                </h3>
-              </motion.div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {categories.map(cat => (
+          <Link key={cat.slug} to={`/gallery/${cat.slug}`}>
+            <motion.div
+              whileHover={{ scale: 1.03 }}
+              className="
+                h-44 rounded-xl
+                bg-panel border border-borderSoft
+                flex items-center justify-center
+              "
+            >
+              <h2 className="text-2xl font-display">
+                {cat.title}
+              </h2>
+            </motion.div>
+          </Link>
+        ))}
+      </div>
     </main>
   )
 }
