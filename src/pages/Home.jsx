@@ -1,18 +1,16 @@
-// eslint-disable-next-line no-unused-vars
-import { motion } from 'framer-motion'
-import HeroSlider from '../components/HeroSlider'
-import Achievements from '../components/Achievements'
-import Timeline from '../components/Timeline'
-import AboutMe from '../components/AboutMe'
-import ContactSection from '../components/ContactSection'
+import HeroSection from "../components/home/HeroSection"
+import FeaturedGallery from "../components/home/FeaturedGallery"
+import AboutMe from "../components/home/AboutMe"
+import Timeline from "../components/Timeline"
+import ContactSection from "../components/home/ContactSection"
 
 export default function Home() {
   return (
     <main>
-      <HeroSlider />
-      <Achievements />
-      <Timeline />
+      <HeroSection />
+      <FeaturedGallery />
       <AboutMe />
+      <Timeline />
       <ContactSection />
     </main>
   )
