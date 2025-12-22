@@ -7,13 +7,43 @@ export default function ContactSection() {
     email: "",
     message: ""
   })
-  const [sent, setSent] = useState(false)
+
+  const [status, setStatus] = useState("idle")
+  // status: idle | sending | success | error
 
   const submit = async (e) => {
     e.preventDefault()
+    setStatus("sending")
 
-    await supabase.from("contact_messages").insert([form])
-    setSent(true)
+    // 1️⃣ Insert into database
+    const { error } = await supabase
+      .from("contact_messages")
+      .insert([form])
+
+    if (error) {
+      console.error("DB insert error:", error)
+      setStatus("error")
+      return
+    }
+
+    // 2️⃣ Send email notification
+    try {
+      const res = await fetch(
+        "https://rehivhbkyaopgsvaibdu.supabase.co/functions/v1/send-contact-email",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        }
+      )
+
+      if (!res.ok) throw new Error("Email failed")
+
+      setStatus("success")
+    } catch (err) {
+      console.error("Email error:", err)
+      setStatus("error")
+    }
   }
 
   return (
@@ -22,13 +52,22 @@ export default function ContactSection() {
         Contact Me
       </h2>
 
-      {sent ? (
-        <p className="text-soft">
-          Thank you. I’ll get back to you soon.
+      {status === "success" && (
+        <p className="text-green-400">
+          ✅ Message sent successfully. I’ll get back to you soon.
         </p>
-      ) : (
-        <form onSubmit={submit} className="space-y-6">
+      )}
+
+      {status === "error" && (
+        <p className="text-red-400">
+          ❌ Something went wrong. Please try again.
+        </p>
+      )}
+
+      {status !== "success" && (
+        <form onSubmit={submit} className="space-y-6 mt-6">
           <input
+            required
             placeholder="Name"
             className="w-full bg-panel p-4 rounded-lg"
             onChange={(e) =>
@@ -36,29 +75,37 @@ export default function ContactSection() {
             }
           />
           <input
-            placeholder="Email"
+            required
             type="email"
+            placeholder="Email"
             className="w-full bg-panel p-4 rounded-lg"
             onChange={(e) =>
               setForm({ ...form, email: e.target.value })
             }
           />
           <textarea
-            placeholder="Message"
+            required
             rows="5"
+            placeholder="Message"
             className="w-full bg-panel p-4 rounded-lg"
             onChange={(e) =>
               setForm({ ...form, message: e.target.value })
             }
           />
+
           <button
-            className="
+            disabled={status === "sending"}
+            className={`
               px-10 py-4 rounded-full
-              bg-white text-black
-              hover:opacity-90 transition
-            "
+              transition
+              ${
+                status === "sending"
+                  ? "bg-gray-400 text-black cursor-not-allowed"
+                  : "bg-white text-black hover:opacity-90"
+              }
+            `}
           >
-            Send Message
+            {status === "sending" ? "Sending..." : "Send Message"}
           </button>
         </form>
       )}
