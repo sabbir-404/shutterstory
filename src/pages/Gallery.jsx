@@ -9,7 +9,8 @@ const categories = [
   { slug: 'seminar', title: 'Seminar' },
   { slug: 'travel', title: 'Travel' },
   { slug: 'conference', title: 'Conference' },
-  { slug: 'cultural', title: 'Cultural Programs' }
+  { slug: 'cultural', title: 'Cultural Programs' },
+  { slug: 'clubEvents', title: 'Club Events' }
 ]
 
 export default function Gallery() {
